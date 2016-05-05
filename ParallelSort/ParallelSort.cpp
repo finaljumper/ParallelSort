@@ -4,8 +4,6 @@
 #include "stdafx.h"
 #include <iostream>
 #include <cstring>
-//#include <algorithm>
-#include <time.h>
 #include <ppl.h>
 
 double range(char code)
@@ -173,33 +171,12 @@ int main(int argc, char *argv[])
 		system("pause");
 		exit(0);
 	}
-	std::cout << "Reading file..." << std::endl;
 	FILE * ptrFile = fopen(input, "rb");
-	if (ptrFile == NULL)
-	{
-		std::cout << "File error.";
-		system("pause");
-		exit(1);
-	}
-	// определяем размер файла
 	fseek(ptrFile, 0, SEEK_END);
 	lSize = ftell(ptrFile);
 	rewind(ptrFile);
 	buffer = (char*)malloc(lSize);
-	if (buffer == NULL)
-	{
-		std::cout << "Memory error.";
-		system("pause");
-		exit(2);
-	}
-
 	size_t result = fread(buffer, 1, lSize, ptrFile);
-	if (result != lSize)
-	{
-		std::cout << "Reading error.";
-		system("pause");
-		exit(3);
-	}
 	for (i = 0; i < lSize; i++) {
 		if (buffer[i] == '\n') {
 			count++;
@@ -234,21 +211,15 @@ int main(int argc, char *argv[])
 			currentLine++;
 		}
 	}
-	clock_t sort_start = clock();
-	std::cout << "Reading finished in: " << sort_start / (float)CLOCKS_PER_SEC << " sec" << std::endl;
 	fclose(ptrFile);
 	free(buffer);
-	concurrency::parallel_buffered_sort(&lines[0], &lines[currentLine], comparator);
-	//std::sort(&lines[0], &lines[currentLine], comparator);
-	std::cout << "Sort completed. Time spent: " << (clock() - sort_start) / (float)CLOCKS_PER_SEC << " sec" << std::endl;
+	concurrency::parallel_buffered_sort(&lines[0], &lines[currentLine], comparator);	
 	FILE * out = fopen(output, "wb");
 	for (i = 0; i < currentLine; i++)
 	{
 		fwrite(lines[i], 1, strlen(lines[i]), out);
-	}
-	std::cout << "Complete time: " << clock() / (float)CLOCKS_PER_SEC << " sec" << std::endl;
+	}	
 	fclose(out);
 	free(lines);
-	system("pause");
 	return 0;
 }
