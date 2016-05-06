@@ -8,41 +8,34 @@
 
 double range(char code)
 {
-	double SYMBOLS = 0.1;
-	double DIGITS = 0.3;
-	double CYRILLIC = 2;
-	double SMALL_CYRILLIC = 0.7;
-	double SMALL_LATIN = 200;
-	double LATIN = 400;
-
 	if ((code >= 32 && code <= 47) || (code >= 58 && code <= 64) || (code >= 123 && code <= 126)
 		|| (code >= 91 && code <= 96) || code == 13)
 	{
-		return code*SYMBOLS;
+		return code;
 	}
 	if (code >= 48 && code <= 57)
 	{
-		return code*DIGITS;
+		return code + 100;
 	}
 	if (code >= 65 && code <= 122)
 	{
 		if (code >= 97)
 		{
-			return code * SMALL_LATIN;
+			return code + 1500;
 		}
-		return code*LATIN;
+		return code + 2000;
 	}
 	if (code <= -65 && code >= -128)
 	{
 		if (code >= -128 && code <= -113)
 		{
-			return (code + 1216)*SMALL_CYRILLIC;
+			return (code + 1216);
 		}
 		if ((code >= -80 && code <= -65))
 		{
-			return (code + 1152)*SMALL_CYRILLIC;
+			return (code + 1152);
 		}
-		return (code + 1152)*CYRILLIC;
+		return (code + 1500);
 	}
 	if (code == -47 || code == -48)
 	{
