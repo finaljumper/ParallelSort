@@ -6,7 +6,7 @@
 #include <cstring>
 #include <ppl.h>
 
-double range(char code)
+int range(char code)
 {
 	if ((code >= 32 && code <= 47) || (code >= 58 && code <= 64) || (code >= 123 && code <= 126)
 		|| (code >= 91 && code <= 96) || code == 13)
